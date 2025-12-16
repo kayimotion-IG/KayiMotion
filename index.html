@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth; scroll-padding-top: 80px;">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KayiMotion | Future of Visuals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- PWA Settings -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #030303;
+        color: #ffffff;
+      }
+      /* Hide default cursor on non-touch devices to use custom cursor */
+      @media (hover: hover) and (pointer: fine) {
+        body {
+          cursor: none;
+        }
+        a, button, input, textarea {
+          cursor: none;
+        }
+      }
+      h1, h2, h3, h4, h5, h6, .brand-font {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .gradient-text {
+        background: linear-gradient(to right, #c084fc, #6366f1, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-marquee {
+        display: flex;
+        width: max-content;
+        animation: marquee 40s linear infinite;
+        will-change: transform;
+      }
+      .animate-fade-in-down {
+        animation: fadeInDown 0.3s ease-out;
+      }
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-spin-slow {
+        animation: spin 8s linear infinite;
+      }
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0"
+  }
+}
+</script>
+<!-- Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      // Use relative path ./sw.js to ensure it works in subdirectories/previews
+      navigator.serviceWorker.register('./sw.js')
+        .then(registration => {
+          console.log('SW registered: ', registration);
+        })
+        .catch(registrationError => {
+          console.log('SW registration failed: ', registrationError);
+        });
+    });
+  }
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
