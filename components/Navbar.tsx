@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Aperture, Link as LinkIcon, Check, Download } from 'lucide-react';
+import { COMPANY_CONFIG } from '../constants';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onNavigate: (view: string) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
@@ -41,7 +46,7 @@ const Navbar: React.FC = () => {
       }
     } else {
       // Fallback instruction for manual install
-      alert("To install KayiMotion App:\n\n1. Look for the 'Install' icon in your browser's address bar.\nOR\n2. Open the Browser Menu (three dots) -> Select 'Save and Share' -> 'Install KayiMotion Agency'.");
+      alert(`To install ${COMPANY_CONFIG.name} App:\n\n1. Look for the 'Install' icon in your browser's address bar.\nOR\n2. Open the Browser Menu (three dots) -> Select 'Save and Share' -> 'Install App'.`);
     }
   };
 
@@ -57,20 +62,29 @@ const Navbar: React.FC = () => {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
     
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+    // Check if we need to navigate back to home view first
+    // Since we are in the Navbar component, we assume any nav click implies going to home + section
+    // We call onNavigate('home') first.
+    
+    onNavigate('home');
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+    // Small timeout to allow view to switch before trying to find the element
+    setTimeout(() => {
+      const element = document.getElementById(targetId);
+      if (element) {
+        const headerOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 100);
       
-      setIsMobileMenuOpen(false);
-    }
+    setIsMobileMenuOpen(false);
   };
 
   const handleShare = async () => {
@@ -98,10 +112,10 @@ const Navbar: React.FC = () => {
           <a 
             href="#home" 
             onClick={(e) => handleNavClick(e, '#home')}
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer group"
+            className="flex-shrink-0 flex items-center gap-3 cursor-pointer group"
           >
-            <Aperture className="h-8 w-8 text-indigo-500 group-hover:rotate-180 transition-transform duration-700" />
-            <span className="brand-font text-2xl font-bold tracking-tighter text-white">
+            <Aperture className="h-8 w-8 md:h-10 md:w-10 text-indigo-500 group-hover:rotate-180 transition-transform duration-700" />
+            <span className="brand-font text-3xl md:text-4xl font-extrabold tracking-tighter text-white">
               Kayi<span className="text-indigo-500">Motion</span>
             </span>
           </a>

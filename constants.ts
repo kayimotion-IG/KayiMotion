@@ -1,19 +1,19 @@
 
 export const COMPANY_CONFIG = {
   name: "KayiMotion",
-  tagline: "Building the brain for your business.",
+  tagline: "Architects of Automated Growth.", 
   contact: {
-    email: "mike@kayimotion.com",
-    phone: "+1 (980) 525-0000",
+    email: "contact@kayimotion.com", 
+    phone: "+971 (50) 7888 506",
     address: {
-      line1: "123 Motion Blvd, Suite 100",
-      line2: "Miami, FL 33130"
+      line1: "Towers Rotana, Sheikh Zayed Rd",
+      line2: "Dubai, United Arab Emirates"
     }
   },
   socials: {
-    linkedin: "#",
-    twitter: "#",
-    instagram: "#",
-    github: "#"
+    linkedin: "https://linkedin.com/company/kayimotion",
+    twitter: "https://x.com/kayimotion",
+    instagram: "https://instagram.com/kayimotion",
+    github: "https://github.com/kayimotion"
   }
 };

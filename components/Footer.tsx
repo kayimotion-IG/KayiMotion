@@ -4,9 +4,10 @@ import { COMPANY_CONFIG } from '../constants';
 
 interface FooterProps {
   onOpenProject: () => void;
+  onNavigate: (view: string) => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ onOpenProject }) => {
+const Footer: React.FC<FooterProps> = ({ onOpenProject, onNavigate }) => {
   return (
     <footer className="bg-black border-t border-white/10 text-white relative overflow-hidden">
       
@@ -21,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ onOpenProject }) => {
             LET'S TALK
           </h2>
           <div className="flex items-center gap-4 mt-8 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-            <span className="text-xl md:text-2xl font-light">Start your project</span>
+            <span className="text-xl md:text-2xl font-light group-hover:text-indigo-500 transition-colors">Start your project</span>
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
               <ArrowUpRight className="w-6 h-6 text-black" />
             </div>
@@ -35,33 +36,35 @@ const Footer: React.FC<FooterProps> = ({ onOpenProject }) => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             
             <div className="col-span-1 md:col-span-1">
-              <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center gap-2 mb-6 cursor-pointer" onClick={() => onNavigate('home')}>
                 <Aperture className="h-6 w-6 text-indigo-500" />
-                <span className="brand-font text-xl font-bold">{COMPANY_CONFIG.name}</span>
+                <span className="brand-font text-2xl font-extrabold tracking-tighter">
+                  Kayi<span className="text-indigo-500">Motion</span>
+                </span>
               </div>
               <p className="text-gray-500 text-sm leading-relaxed">
                 {COMPANY_CONFIG.tagline} <br/>
-                Automating the future, today.
+                Based in Dubai, Scaling Globally.
               </p>
             </div>
 
             <div>
               <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-gray-500">Sitemap</h4>
               <ul className="space-y-4 text-lg font-light text-gray-300">
-                <li><a href="#home" className="hover:text-indigo-500 transition-colors">Home</a></li>
-                <li><a href="#services" className="hover:text-indigo-500 transition-colors">Services</a></li>
-                <li><a href="#work" className="hover:text-indigo-500 transition-colors">Case Studies</a></li>
-                <li><a href="#studio" className="hover:text-indigo-500 transition-colors">AI Studio</a></li>
+                <li><button onClick={() => onNavigate('home')} className="hover:text-indigo-500 transition-colors text-left">Home</button></li>
+                <li><a href="#services" onClick={(e) => { if(window.location.pathname !== '/') onNavigate('home'); }} className="hover:text-indigo-500 transition-colors">Services</a></li>
+                <li><a href="#work" onClick={(e) => { if(window.location.pathname !== '/') onNavigate('home'); }} className="hover:text-indigo-500 transition-colors">Case Studies</a></li>
+                <li><a href="#studio" onClick={(e) => { if(window.location.pathname !== '/') onNavigate('home'); }} className="hover:text-indigo-500 transition-colors">AI Studio</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-gray-500">Socials</h4>
               <ul className="space-y-4 text-lg font-light text-gray-300">
-                <li><a href={COMPANY_CONFIG.socials.linkedin} className="hover:text-indigo-500 transition-colors">LinkedIn</a></li>
-                <li><a href={COMPANY_CONFIG.socials.twitter} className="hover:text-indigo-500 transition-colors">Twitter / X</a></li>
-                <li><a href={COMPANY_CONFIG.socials.instagram} className="hover:text-indigo-500 transition-colors">Instagram</a></li>
-                <li><a href={COMPANY_CONFIG.socials.github} className="hover:text-indigo-500 transition-colors">GitHub</a></li>
+                <li><a href={COMPANY_CONFIG.socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500 transition-colors">LinkedIn</a></li>
+                <li><a href={COMPANY_CONFIG.socials.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500 transition-colors">Twitter / X</a></li>
+                <li><a href={COMPANY_CONFIG.socials.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500 transition-colors">Instagram</a></li>
+                <li><a href={COMPANY_CONFIG.socials.github} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500 transition-colors">GitHub</a></li>
               </ul>
             </div>
 
@@ -82,8 +85,8 @@ const Footer: React.FC<FooterProps> = ({ onOpenProject }) => {
           <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600 uppercase tracking-wider">
             <p>© {new Date().getFullYear()} {COMPANY_CONFIG.name}. All rights reserved.</p>
             <div className="flex gap-8 mt-4 md:mt-0">
-              <a href="#" className="hover:text-gray-400">Privacy</a>
-              <a href="#" className="hover:text-gray-400">Terms</a>
+              <button onClick={() => onNavigate('privacy')} className="hover:text-gray-400 uppercase tracking-wider">Privacy Policy</button>
+              <button onClick={() => onNavigate('terms')} className="hover:text-gray-400 uppercase tracking-wider">Terms of Service</button>
             </div>
           </div>
         </div>

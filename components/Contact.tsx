@@ -72,12 +72,23 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            <div className="h-64 rounded-2xl bg-gray-800/50 border border-white/5 relative overflow-hidden flex items-center justify-center group">
-               <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/-118.2437,34.0522,12,0/600x400?access_token=placeholder')] bg-cover bg-center opacity-50 grayscale group-hover:grayscale-0 transition-all duration-700"></div>
-               <div className="relative z-10 text-center">
-                 <MapPin className="w-8 h-8 text-indigo-500 mx-auto mb-2 animate-bounce" />
-                 <span className="text-xs text-white font-mono uppercase tracking-widest bg-black/80 px-2 py-1 rounded">Los Angeles</span>
+            {/* Active Map */}
+            <div className="h-64 rounded-2xl bg-gray-800/50 border border-white/5 relative overflow-hidden group">
+               <iframe 
+                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178512307137!2d55.27180437605553!3d25.21260673099958!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f428d086576df%3A0x3c27653770387532!2sTowers%20Rotana%20-%20Sheikh%20Zayed%20Rd%20-%20Trade%20Centre%20-%20Trade%20Centre%201%20-%20Dubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2s!4v1709664446358!5m2!1sen!2s"
+                 width="100%" 
+                 height="100%" 
+                 style={{ border: 0, filter: 'grayscale(1) invert(1) contrast(0.8) brightness(0.8)' }} 
+                 allowFullScreen={true} 
+                 loading="lazy" 
+                 referrerPolicy="no-referrer-when-downgrade"
+                 title="Office Location"
+                 className="absolute inset-0 w-full h-full opacity-70 group-hover:opacity-100 transition-opacity duration-500"
+               />
+               <div className="absolute bottom-4 left-4 z-10 pointer-events-none">
+                 <span className="text-xs text-black font-bold uppercase tracking-widest bg-white/90 px-3 py-1.5 rounded-md shadow-lg flex items-center gap-2">
+                    <MapPin className="w-3 h-3 text-indigo-600" /> Dubai, UAE
+                 </span>
                </div>
             </div>
           </div>
@@ -96,7 +107,7 @@ const Contact: React.FC = () => {
                     value={formState.name}
                     onChange={handleChange}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-                    placeholder="John Doe"
+                    placeholder="Mike Brid"
                   />
                 </div>
                 <div className="space-y-2">
@@ -131,7 +142,7 @@ const Contact: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full py-4 bg-white text-black hover:bg-indigo-600 hover:text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
                 {!isSubmitting && <Send className="w-5 h-5" />}

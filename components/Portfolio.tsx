@@ -200,7 +200,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onOpenProject }) => {
            <div className="text-center md:text-left flex md:justify-end items-center">
               <button 
                 onClick={onOpenProject}
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-gray-200 transition-all duration-300 group"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-indigo-600 hover:text-white transition-all duration-300 group"
               >
                 Start Your Project
                 <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
