@@ -1,8 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AIConceptResponse } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 const conceptSchema = {
   type: Type.OBJECT,
   properties: {
@@ -21,6 +19,13 @@ const conceptSchema = {
 
 export const generateCreativeConcept = async (userPrompt: string): Promise<AIConceptResponse> => {
   try {
+    // Initialize here to prevent top-level crashes if env var is missing during build/mount
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) {
+      throw new Error("API Key is missing. Please check your environment variables.");
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
     const model = "gemini-2.5-flash";
     const systemInstruction = `You are a world-class Creative Director at a high-end motion design agency named 'KayiMotion'. 
     Your goal is to take a user's vague idea and turn it into a concrete, cutting-edge video production brief.

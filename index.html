@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- PWA Settings -->
-    <link rel="manifest" href="./manifest.json" />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,15 +20,7 @@
         font-family: 'Inter', sans-serif;
         background-color: #030303;
         color: #ffffff;
-      }
-      /* Hide default cursor on non-touch devices to use custom cursor */
-      @media (hover: hover) and (pointer: fine) {
-        body {
-          cursor: none;
-        }
-        a, button, input, textarea {
-          cursor: none;
-        }
+        /* Cursor hiding is now handled by the React component to prevent usability issues if JS fails */
       }
       h1, h2, h3, h4, h5, h6, .brand-font {
         font-family: 'Space Grotesk', sans-serif;
@@ -69,38 +61,46 @@
       }
     </style>
 
-<!-- Service Worker Registration -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      // Use relative path ./sw.js to ensure it works in subdirectories/previews
-      navigator.serviceWorker.register('./sw.js')
-        .then(registration => {
-          console.log('SW registered: ', registration);
-        })
-        .catch(registrationError => {
-          console.log('SW registration failed: ', registrationError);
+    <!-- Error Trap: Displays errors on screen if the app crashes before loading -->
+    <script>
+      window.addEventListener('error', function(event) {
+        const errorContainer = document.getElementById('root');
+        if(errorContainer && errorContainer.innerHTML === '') {
+          document.body.innerHTML += '<div style="color: #ff5555; background: #220000; padding: 20px; font-family: monospace; border-bottom: 1px solid red; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;"><strong>System Error:</strong> ' + event.message + '</div>';
+        }
+      });
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered');
+            })
+            .catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+            });
         });
-    });
-  }
-</script>
-<script type="importmap">
+      }
+    </script>
+  <script type="importmap">
 {
   "imports": {
-    "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.33.0"
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
 </head>
   <body>
     <div id="root"></div>
-    <!-- Crucial for Vite Build: Entry Point -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>

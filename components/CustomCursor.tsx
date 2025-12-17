@@ -6,6 +6,9 @@ const CustomCursor: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Safely hide cursor only when component mounts successfully
+    document.body.style.cursor = 'none';
+    
     const updateCursor = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
@@ -33,11 +36,20 @@ const CustomCursor: React.FC = () => {
     return () => {
       window.removeEventListener('mousemove', updateCursor);
       document.removeEventListener('mouseover', handleMouseOver);
+      // Restore cursor if component crashes or unmounts
+      document.body.style.cursor = 'auto';
     };
   }, []);
 
-  // Only render on devices that support hover (non-touch)
-  if (typeof window !== 'undefined' && window.matchMedia && !window.matchMedia('(hover: hover)').matches) {
+  // Check for touch device capabilities to disable custom cursor on mobile
+  // Using a robust check that works in SSR and browser
+  const isTouchDevice = typeof window !== 'undefined' && (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0
+  );
+
+  if (isTouchDevice) {
+    if (typeof document !== 'undefined') document.body.style.cursor = 'auto';
     return null;
   }
 

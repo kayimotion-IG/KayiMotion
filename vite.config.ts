@@ -6,13 +6,12 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     define: {
-      'process.env.API_KEY': JSON.stringify(env.API_KEY),
-    },
-    build: {
-      outDir: 'dist',
-      assetsDir: 'assets',
-      sourcemap: false,
+      // Safely define process.env.API_KEY to prevent 'process is not defined' error in browser
+      'process.env.API_KEY': JSON.stringify(env.API_KEY || ''),
     },
     publicDir: 'public',
+    build: {
+      outDir: 'dist',
+    }
   };
 });
